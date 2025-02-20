@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notepad </title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Authentication Container -->
+        <div id="auth-container" class="auth-container">
+            <div class="auth-form-container">
+                <h2>Notepad </h2>
+                <div class="tabs">
+                    <button id="login-tab" class="tab active">Login</button>
+                    <button id="signup-tab" class="tab">Sign Up</button>
+                </div>
+                
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+                
+                <!-- Signup Form -->
+                <form id="signup-form" class="auth-form hidden">
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Sign Up</button>
+                </form>
+                
+                <div id="auth-error" class="error-message"></div>
+            </div>
+        </div>
+
+        <!-- Main Editor Container -->
+        <div id="editor-container" class="editor-container hidden">
+            <header class="app-header">
+                <div class="logo">Notepad </div>
+                <div class="user-info">
+                    <span id="current-user"></span>
+                    <button id="logout-btn" class="btn-secondary">Logout</button>
+                </div>
+            </header>
+            
+            <div class="main-content">
+                <!-- Sidebar - Document List -->
+                <aside class="sidebar">
+                    <div class="sidebar-header">
+                        <h3>Documents</h3>
+                        <button id="new-file-btn" class="btn-icon" title="New File">+</button>
+                    </div>
+                    <div id="document-list" class="document-list"></div>
+                </aside>
+                
+                <!-- Editor Area -->
+                <main class="editor-area">
+                    <div class="editor-toolbar">
+                        <div class="file-operations">
+                            <button id="save-btn" class="toolbar-btn" title="Save">Save</button>
+                            <button id="delete-btn" class="toolbar-btn" title="Delete">Delete</button>
+                        </div>
+                        <div class="editor-settings">
+                            <select id="language-selector" class="language-selector">
+                                <option value="plaintext">Plain Text</option>
+                                <option value="javascript">JavaScript</option>
+                                <option value="html">HTML</option>
+                                <option value="css">CSS</option>
+                                <option value="python">Python</option>
+                                <option value="java">Java</option>
+                                <option value="csharp">C#</option>
+                                <option value="php">PHP</option>
+                            </select>
+                            <button id="toggle-theme-btn" class="toolbar-btn" title="Toggle Theme">🌙</button>
+                        </div>
+                    </div>
+                    
+                    <div class="filename-container">
+                        <input type="text" id="filename-input" placeholder="Untitled Document">
+                    </div>
+                    
+                    <div id="editor-wrapper" class="editor-wrapper">
+                        <div id="line-numbers" class="line-numbers"></div>
+                        <textarea id="editor" class="code-editor" spellcheck="false"></textarea>
+                        <pre id="highlight-layer" class="highlight-layer"><code id="highlighted-code"></code></pre>
+                    </div>
+                    
+                    <div class="status-bar">
+                        <div id="cursor-position">Line: 1, Column: 1</div>
+                        <div id="document-info"></div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
